@@ -1,0 +1,162 @@
+CCS PCM C Compiler, Version 5.076, 56587               21-oct.-26 10:50
+
+               Filename:   C:\Users\Brandbold\Documents\PICsWorkSpace\led00\led_1.lst
+
+               ROM used:   97 words (1%)
+                           Largest free fragment is 2048
+               RAM used:   9 (2%) at main() level
+                           10 (3%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... #include <16f877a.h> 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+....................  
+.................... #list 
+....................  
+.................... #fuses XT, NOWDT, NOPUT, NOLVP, NOPROTECT, BROWNOUT 
+.................... #use delay(clock=4M) 
+0004:  MOVLW  25
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+.................... //#use standard_io(B) 
+.................... #use fast_io(B) 
+.................... //#use fixed_io(b_outputs=PIN_B0) 
+....................  
+....................  
+.................... void main() { 
+0019:  MOVF   03,W
+001A:  ANDLW  1F
+001B:  MOVWF  03
+001C:  BSF    03.5
+001D:  BSF    1F.0
+001E:  BSF    1F.1
+001F:  BSF    1F.2
+0020:  BCF    1F.3
+0021:  MOVLW  07
+0022:  MOVWF  1C
+0023:  BCF    03.7
+0024:  BCF    03.5
+0025:  CLRF   21
+0026:  CLRF   23
+0027:  MOVLW  64
+0028:  MOVWF  22
+....................  
+....................    int8 counter = 0; 
+....................    int16 delay = 100; 
+....................  
+....................    set_tris_b(0); 
+0029:  MOVLW  00
+002A:  BSF    03.5
+002B:  MOVWF  06
+....................    output_b(0); 
+002C:  BCF    03.5
+002D:  CLRF   06
+....................  
+....................    while(true) { 
+....................  
+....................       if (counter == 10) { 
+002E:  MOVF   21,W
+002F:  SUBLW  0A
+0030:  BTFSS  03.2
+0031:  GOTO   042
+....................          counter = 0; 
+0032:  CLRF   21
+....................          delay += 100; 
+0033:  MOVLW  64
+0034:  ADDWF  22,F
+0035:  BTFSC  03.0
+0036:  INCF   23,F
+....................  
+....................          if (delay == 1100) { 
+0037:  MOVF   22,W
+0038:  SUBLW  4C
+0039:  BTFSS  03.2
+003A:  GOTO   042
+003B:  MOVF   23,W
+003C:  SUBLW  04
+003D:  BTFSS  03.2
+003E:  GOTO   042
+....................             delay = 100; 
+003F:  CLRF   23
+0040:  MOVLW  64
+0041:  MOVWF  22
+....................          } 
+....................           
+....................       } 
+....................  
+....................       output_high(PIN_B0); 
+0042:  BSF    06.0
+....................       delay_ms(delay); 
+0043:  MOVF   23,W
+0044:  MOVWF  24
+0045:  INCF   24,F
+0046:  DECF   24,F
+0047:  BTFSC  03.2
+0048:  GOTO   04D
+0049:  MOVLW  FF
+004A:  MOVWF  25
+004B:  CALL   004
+004C:  GOTO   046
+004D:  MOVF   22,W
+004E:  MOVWF  25
+004F:  CALL   004
+....................       output_low(PIN_B0); 
+0050:  BCF    06.0
+....................       delay_ms(delay); 
+0051:  MOVF   23,W
+0052:  MOVWF  24
+0053:  INCF   24,F
+0054:  DECF   24,F
+0055:  BTFSC  03.2
+0056:  GOTO   05B
+0057:  MOVLW  FF
+0058:  MOVWF  25
+0059:  CALL   004
+005A:  GOTO   054
+005B:  MOVF   22,W
+005C:  MOVWF  25
+005D:  CALL   004
+....................  
+....................       counter++; 
+005E:  INCF   21,F
+005F:  GOTO   02E
+....................    } 
+.................... } 
+0060:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F79   XT NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

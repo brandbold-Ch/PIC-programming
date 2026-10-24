@@ -1,0 +1,14 @@
+[PROJECT]
+Target=led_1.hex
+Processor_Text=PIC16F877A
+CCSVersion=5.076
+Compiler=PCM
+[Target Data]
+FileList=led_1.c
+[led_1.c]
+Type=4
+[mru-list]
+1=led_1.c
+[Units]
+Count=1
+1=led_1 (main)

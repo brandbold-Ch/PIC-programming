@@ -1,0 +1,137 @@
+CCS PCM C Compiler, Version 5.076, 56587               21-oct.-26 21:56
+
+               Filename:   C:\Users\Brandbold\Documents\PICsWorkSpace\button00\button_3.lst
+
+               ROM used:   72 words (1%)
+                           Largest free fragment is 2048
+               RAM used:   9 (2%) at main() level
+                           9 (2%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   01B
+0003:  NOP
+.................... #include <16F877A.h> 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+....................  
+.................... #list 
+....................  
+.................... #fuses NOWDT, XT, NOPUT, BROWNOUT, NOLVP, NOPROTECT, NODEBUG 
+.................... #use delay(clock=4M) 
+0004:  MOVLW  23
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  BCF    0A.3
+0019:  BCF    0A.4
+001A:  GOTO   040 (RETURN)
+.................... #use standard_io(D) 
+.................... #use fast_io(B) 
+....................  
+....................  
+.................... typedef struct { 
+....................     int8 buses[8]; 
+....................     int8 size; 
+.................... } PORTS_B; 
+....................  
+.................... int main(void) { 
+001B:  MOVF   03,W
+001C:  ANDLW  1F
+001D:  MOVWF  03
+001E:  BSF    03.5
+001F:  BSF    1F.0
+0020:  BSF    1F.1
+0021:  BSF    1F.2
+0022:  BCF    1F.3
+0023:  MOVLW  07
+0024:  MOVWF  1C
+0025:  BCF    03.7
+0026:  BCF    03.5
+0027:  CLRF   21
+....................     unsigned char ports_b = 0; 
+....................  
+....................     set_tris_b(0x00); 
+0028:  MOVLW  00
+0029:  BSF    03.5
+002A:  MOVWF  06
+....................     output_b(0x00); 
+002B:  BCF    03.5
+002C:  CLRF   06
+....................  
+....................     output_low(PIN_D0); 
+002D:  BSF    03.5
+002E:  BCF    08.0
+002F:  BCF    03.5
+0030:  BCF    08.0
+....................  
+....................     short current_btn_state = 0; 
+....................     short last_btn_state = 0; 
+0031:  BCF    22.0
+0032:  BCF    22.1
+....................  
+....................     while (true) { 
+....................         current_btn_state = input(PIN_D0); 
+0033:  BSF    03.5
+0034:  BSF    08.0
+0035:  BCF    03.5
+0036:  BCF    22.0
+0037:  BTFSC  08.0
+0038:  BSF    22.0
+....................  
+....................         if (current_btn_state == 1 && last_btn_state == 0) { 
+0039:  BTFSS  22.0
+003A:  GOTO   043
+003B:  BTFSC  22.1
+003C:  GOTO   043
+....................             delay_ms(10); 
+003D:  MOVLW  0A
+003E:  MOVWF  23
+003F:  GOTO   004
+....................  
+....................             ports_b++; 
+0040:  INCF   21,F
+....................             output_b(ports_b); 
+0041:  MOVF   21,W
+0042:  MOVWF  06
+....................         } 
+....................  
+....................         last_btn_state = current_btn_state; 
+0043:  BCF    22.1
+0044:  BTFSC  22.0
+0045:  BSF    22.1
+0046:  GOTO   033
+....................     } 
+.................... } 
+0047:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F79   XT NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

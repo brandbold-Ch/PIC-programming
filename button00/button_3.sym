@@ -1,0 +1,62 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+021     main.PORTS_B
+022.0   main.current_btn_state
+022.1   main.last_btn_state
+023     @delay_ms1.P1
+023     main.@SCRATCH1
+024     main.@SCRATCH2
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @READ_PROGRAM_MEMORY8.P1
+10D-10E @WRITE_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  @delay_ms1
+00001B  @cinit1
+00001B  main
+000025  @cinit2
+
+Project Directory:
+    C:\Users\Brandbold\Documents\PICsWorkSpace\button00\
+
+Project Files:
+    button_3.c                                              [21-oct.-26 21:56  CRC=78A353D3]
+    ..\..\..\..\..\PROGRA~2\PICC\Devices\16F877A.h          [15-ene.-18 14:53  CRC=63418C39]
+
+Source signature=3F266C45
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=B200
+
+Units:
+    button_3 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    Errors:      button_3.err
+    INHX8:       button_3.hex
+    Symbols:     button_3.sym
+    List:        button_3.lst
+    Debug/eCOD:  button_3.cod
+    Project:     button_3.ccspjt

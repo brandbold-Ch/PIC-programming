@@ -1,0 +1,60 @@
+004-005 @READ_PROGRAM_MEMORY8.P1
+004-005 @WRITE_PROGRAM_MEMORY8.P2
+008     PSP_DATA
+015     CCP_1_LOW
+015     CCP_1
+016     CCP_1_HIGH
+01B     CCP_2_LOW
+01B     CCP_2
+01C     CCP_2_HIGH
+021     main.counter
+022-023 main.delay
+024     main.@SCRATCH1
+025     @delay_ms1.P1
+077     @SCRATCH
+078     @SCRATCH
+078     _RETURN_
+079     @SCRATCH
+07A     @SCRATCH
+09C.6   C1OUT
+09C.7   C2OUT
+10D-10E @READ_PROGRAM_MEMORY8.P1
+10D-10E @WRITE_PROGRAM_MEMORY8.P2
+
+ROM Allocation:
+000004  @delay_ms1
+000019  @cinit1
+000019  main
+000023  @cinit2
+
+Project Directory:
+    C:\Users\Brandbold\Documents\PICsWorkSpace\led00\
+
+Project Files:
+    led_1.c                                                 [21-oct.-26 08:41  CRC=FF099C76]
+    ..\..\..\..\..\PROGRA~2\PICC\Devices\16f877a.h          [15-ene.-18 14:53  CRC=63418C39]
+
+Source signature=C58CB4E8
+Program memory checksum=0000
+Program memory CRC=0000
+Hex file CRC=A371
+
+Units:
+    led_1 (main)
+
+Compiler Settings:
+    Processor:      PIC16F877A
+    Pointer Size:   16
+    ADC Range:      0-255
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+    Compile Mode:       CCS5
+
+Output Files:
+    Errors:      led_1.err
+    INHX8:       led_1.hex
+    Symbols:     led_1.sym
+    List:        led_1.lst
+    Debug/eCOD:  led_1.cod
+    Project:     led_1.ccspjt

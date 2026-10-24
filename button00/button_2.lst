@@ -1,0 +1,288 @@
+CCS PCM C Compiler, Version 5.076, 56587               21-oct.-26 17:48
+
+               Filename:   C:\Users\Brandbold\Documents\PICsWorkSpace\button00\button_2.lst
+
+               ROM used:   198 words (2%)
+                           Largest free fragment is 2048
+               RAM used:   14 (4%) at main() level
+                           24 (7%) worst case
+               Stack used: 1 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   072
+0003:  NOP
+.................... #include <16F877A.h> 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+*
+001B:  MOVF   30,W
+001C:  ANDLW  07
+001D:  MOVWF  77
+001E:  RRF    30,W
+001F:  MOVWF  78
+0020:  RRF    78,F
+0021:  RRF    78,F
+0022:  MOVLW  1F
+0023:  ANDWF  78,F
+0024:  MOVF   78,W
+0025:  ADDWF  32,W
+0026:  MOVWF  04
+0027:  BCF    03.7
+0028:  BTFSC  33.0
+0029:  BSF    03.7
+002A:  CLRF   78
+002B:  INCF   78,F
+002C:  INCF   77,F
+002D:  GOTO   02F
+002E:  RLF    78,F
+002F:  DECFSZ 77,F
+0030:  GOTO   02E
+0031:  MOVF   31,F
+0032:  BTFSC  03.2
+0033:  GOTO   037
+0034:  MOVF   78,W
+0035:  IORWF  00,F
+0036:  GOTO   03A
+0037:  COMF   78,F
+0038:  MOVF   78,W
+0039:  ANDWF  00,F
+003A:  RETURN
+....................  
+.................... #list 
+....................  
+.................... #fuses XT, NOWDT, NOPUT, BROWNOUT, NOLVP, NOPROTECT, NODEBUG 
+.................... #use delay(clock = 4M) 
+*
+0004:  MOVLW  28
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  BCF    0A.3
+0019:  BCF    0A.4
+001A:  GOTO   099 (RETURN)
+.................... #use standard_io(D) 
+.................... #use fast_io(B) 
+....................  
+....................  
+.................... typedef struct { 
+....................     int8 data[4]; 
+....................     int8 size; 
+.................... } PORTS; 
+....................  
+.................... void set_state(PORTS ports, int8 level) { 
+....................     for (int8 p = 0; p < ports.size; p++) 
+*
+003B:  CLRF   2E
+003C:  MOVF   2C,W
+003D:  SUBWF  2E,W
+003E:  BTFSC  03.0
+003F:  GOTO   06F
+....................     { 
+....................         if (level >= 1) { 
+0040:  MOVF   2D,W
+0041:  SUBLW  00
+0042:  BTFSC  03.0
+0043:  GOTO   058
+....................             output_high(ports.data[p]); 
+0044:  MOVLW  28
+0045:  ADDWF  2E,W
+0046:  MOVWF  04
+0047:  BCF    03.7
+0048:  MOVF   00,W
+0049:  MOVWF  2F
+004A:  MOVWF  30
+004B:  MOVLW  01
+004C:  MOVWF  31
+004D:  CLRF   33
+004E:  CLRF   32
+004F:  CALL   01B
+0050:  MOVF   2F,W
+0051:  MOVWF  30
+0052:  CLRF   31
+0053:  CLRF   33
+0054:  MOVLW  80
+0055:  MOVWF  32
+0056:  CALL   01B
+....................         }  
+0057:  GOTO   06D
+....................         else if (level <= 0) { 
+0058:  MOVF   2D,F
+0059:  BTFSS  03.2
+005A:  GOTO   06D
+....................             output_low(ports.data[p]); 
+005B:  MOVLW  28
+005C:  ADDWF  2E,W
+005D:  MOVWF  04
+005E:  BCF    03.7
+005F:  MOVF   00,W
+0060:  MOVWF  2F
+0061:  MOVWF  30
+0062:  CLRF   31
+0063:  CLRF   33
+0064:  CLRF   32
+0065:  CALL   01B
+0066:  MOVF   2F,W
+0067:  MOVWF  30
+0068:  CLRF   31
+0069:  CLRF   33
+006A:  MOVLW  80
+006B:  MOVWF  32
+006C:  CALL   01B
+....................         } 
+006D:  INCF   2E,F
+006E:  GOTO   03C
+....................     } 
+006F:  BCF    0A.3
+0070:  BCF    0A.4
+0071:  GOTO   0BF (RETURN)
+.................... } 
+....................  
+.................... int main(void) 
+0072:  MOVF   03,W
+0073:  ANDLW  1F
+0074:  MOVWF  03
+0075:  BSF    03.5
+0076:  BSF    1F.0
+0077:  BSF    1F.1
+0078:  BSF    1F.2
+0079:  BCF    1F.3
+007A:  MOVLW  07
+007B:  MOVWF  1C
+007C:  BCF    03.7
+*
+0088:  CLRF   26
+0089:  BCF    27.0
+008A:  BCF    27.1
+.................... { 
+....................     PORTS portsd = {{PIN_D7, PIN_D6, PIN_D5, PIN_D4}, 4}; 
+*
+007D:  MOVLW  47
+007E:  BCF    03.5
+007F:  MOVWF  21
+0080:  MOVLW  46
+0081:  MOVWF  22
+0082:  MOVLW  45
+0083:  MOVWF  23
+0084:  MOVLW  44
+0085:  MOVWF  24
+0086:  MOVLW  04
+0087:  MOVWF  25
+....................     int8 index = 0; 
+....................     short current_btn_state = 0; 
+....................     short last_btn_state = 0; 
+....................  
+....................     set_tris_b(0xFF); 
+*
+008B:  MOVLW  FF
+008C:  BSF    03.5
+008D:  MOVWF  06
+....................  
+....................     while (true) 
+....................     { 
+....................         current_btn_state = input(PIN_B0); 
+008E:  BCF    03.5
+008F:  BCF    27.0
+0090:  BTFSC  06.0
+0091:  BSF    27.0
+....................  
+....................         if (current_btn_state == 1 && last_btn_state == 0) { 
+0092:  BTFSS  27.0
+0093:  GOTO   0BF
+0094:  BTFSC  27.1
+0095:  GOTO   0BF
+....................             delay_ms(10); 
+0096:  MOVLW  0A
+0097:  MOVWF  28
+0098:  GOTO   004
+....................  
+....................             if (index < portsd.size) { 
+0099:  MOVF   25,W
+009A:  SUBWF  26,W
+009B:  BTFSC  03.0
+009C:  GOTO   0B2
+....................                 output_high(portsd.data[index]); 
+009D:  MOVLW  21
+009E:  ADDWF  26,W
+009F:  MOVWF  04
+00A0:  BCF    03.7
+00A1:  MOVF   00,W
+00A2:  MOVWF  28
+00A3:  MOVWF  30
+00A4:  MOVLW  01
+00A5:  MOVWF  31
+00A6:  CLRF   33
+00A7:  CLRF   32
+00A8:  CALL   01B
+00A9:  MOVF   28,W
+00AA:  MOVWF  30
+00AB:  CLRF   31
+00AC:  CLRF   33
+00AD:  MOVLW  80
+00AE:  MOVWF  32
+00AF:  CALL   01B
+....................                 index++; 
+00B0:  INCF   26,F
+....................  
+....................             } else { 
+00B1:  GOTO   0BF
+....................                 index = 0; 
+00B2:  CLRF   26
+....................                 set_state(portsd, 0); 
+00B3:  MOVF   21,W
+00B4:  MOVWF  28
+00B5:  MOVF   22,W
+00B6:  MOVWF  29
+00B7:  MOVF   23,W
+00B8:  MOVWF  2A
+00B9:  MOVF   24,W
+00BA:  MOVWF  2B
+00BB:  MOVF   25,W
+00BC:  MOVWF  2C
+00BD:  CLRF   2D
+00BE:  GOTO   03B
+....................             } 
+....................         } 
+....................  
+....................         last_btn_state = current_btn_state; 
+00BF:  BCF    27.1
+00C0:  BTFSC  27.0
+00C1:  BSF    27.1
+00C2:  GOTO   08F
+....................     } 
+....................  
+....................     return 0; 
+00C3:  MOVLW  00
+00C4:  MOVWF  78
+.................... } 
+00C5:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F79   XT NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

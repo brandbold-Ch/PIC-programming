@@ -1,0 +1,18 @@
+#include <16f877a.h>
+#fuses XT, NOWDT, NOPUT, NOLVP, NOPROTECT, BROWNOUT, INTRC
+#use delay(clock=8M)
+#use fast_io(B)
+
+void main() {
+   //set_tris_b(0b00000000);
+   
+   set_tris_b(0x00);
+   output_b(0x00);
+   
+   while(true) {
+      output_high(PIN_B0);
+      delay_ms(1000);
+      output_low(PIN_B0);
+      delay_ms(1000);
+   }
+}

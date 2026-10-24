@@ -1,0 +1,14 @@
+[PROJECT]
+Target=button_3.hex
+Processor_Text=PIC16F877A
+CCSVersion=5.076
+Compiler=PCM
+[Target Data]
+FileList=button_3.c
+[button_3.c]
+Type=4
+[mru-list]
+1=button_3.c
+[Units]
+Count=1
+1=button_3 (main)
