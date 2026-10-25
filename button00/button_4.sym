@@ -11,11 +11,10 @@
 020.1   last_d2_state
 020.2   current_d3_state
 020.3   last_d3_state
-021     left_operand
-022     right_operand
-023     @delay_ms1.P1
-023     MAIN.@SCRATCH1
-024     MAIN.@SCRATCH2
+021     ports_b
+022     @delay_ms1.P1
+022     MAIN.@SCRATCH1
+023     MAIN.@SCRATCH2
 077     @SCRATCH
 078     @SCRATCH
 078     _RETURN_
@@ -23,29 +22,28 @@
 07A     @SCRATCH
 09C.6   C1OUT
 09C.7   C2OUT
-10D-10E @WRITE_PROGRAM_MEMORY8.P1
-10D-10E @READ_PROGRAM_MEMORY8.P2
+10D-10E @READ_PROGRAM_MEMORY8.P1
+10D-10E @WRITE_PROGRAM_MEMORY8.P2
 
 ROM Allocation:
 000004  @delay_ms1
-000019  clear_operands
-00001D  clear_d2_context
-000023  clear_d3_context
-000029  MAIN
-000029  @cinit1
-00003A  @cinit2
+000019  clear_d2_context
+00001F  clear_d3_context
+000025  MAIN
+000025  @cinit1
+000034  @cinit2
 
 Project Directory:
     C:\Users\Brandbold\Documents\PICsWorkSpace\button00\
 
 Project Files:
-    button_4.c                                              [23-oct.-26 21:47  CRC=8BA299F0]
+    button_4.c                                              [24-oct.-26 19:43  CRC=02CDB30C]
     ..\..\..\..\..\PROGRA~2\PICC\Devices\16F877A.h          [15-ene.-18 14:53  CRC=63418C39]
 
-Source signature=5225B262
+Source signature=C950CB7E
 Program memory checksum=0000
 Program memory CRC=0000
-Hex file CRC=6040
+Hex file CRC=DA05
 
 Units:
     button_4 (main)

@@ -12,26 +12,18 @@ short last_d2_state = 0;
 short current_d3_state = 0;
 short last_d3_state = 0;
 
-char left_operand = 0x00;
-char right_operand = 0x01;
-
-void clear_operands(void) {
-    left_operand = 0x00;
-    right_operand = 0x01;
-}
+char ports_b = 0x00;
 
 void clear_d2_context(void) {
     current_d2_state = 0;
     last_d2_state = 0;
-
-    clear_operands();
+    ports_b = 0x00;
 }
 
 void clear_d3_context(void) {
     current_d3_state = 0;
     last_d3_state = 0;
-
-    clear_operands();
+    ports_b = 0x00;
 }
 
 int main(void) {
@@ -44,49 +36,40 @@ int main(void) {
         current_d2_state = input(PIN_D2);
         current_d3_state = input(PIN_D3);
 
-        if (current_d2_state == 1 && last_d2_state == 0) {
+        if (current_d2_state == 1 && last_d2_state == 0) {            
             delay_ms(10);
 
-            if (left_operand == 0x00) {
-                left_operand |= right_operand;
-                output_b(left_operand);
+            if (ports_b == 0x00) {
+                ports_b |= 0x01;
             } 
-            else if (right_operand == 0x09) {
-                clear_d2_context();
-                continue;
+            else if (ports_b <= 0x80) {
+                ports_b <<= 0x01;
             } 
             else {
-                output_b(left_operand << right_operand);
-                right_operand++;
+                clear_d2_context();
+                continue;
             }
+            
+            output_b(ports_b);
         }
 
         if (current_d3_state == 1 && last_d3_state == 0) {
             delay_ms(10);
 
-            if (left_operand == 0x00) {
-                left_operand |= 0x80;
-                output_b(left_operand);
+            if (ports_b == 0x00) {
+                ports_b |= 0x80;
             }
-            else if (right_operand == 0x09) {
+            else if (ports_b <= 0x80) {
+                ports_b >>= 0x01;
+            }
+            else {
                 clear_d3_context();
                 continue;
             }
-            else {
-                output_b(left_operand >> right_operand);
-                right_operand++;
-                /*
-                if (0x01 <= right_operand && right_operand <= 0x08) {
-                    right_operand--;
-                    output_b(left_operand >> 1);
-                }
-                else {
-                    output_b(left_operand >> right_operand);
-                    right_operand++;
-                }*/
-            }
-        }
 
+            output_b(ports_b);
+        }
+        
         last_d2_state = current_d2_state;
         last_d3_state = current_d3_state;
     }
