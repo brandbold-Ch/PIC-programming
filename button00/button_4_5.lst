@@ -1,0 +1,251 @@
+CCS PCM C Compiler, Version 5.076, 56587               27-oct.-26 11:24
+
+               Filename:   C:\Users\Brandbold\Documents\PICsWorkSpace\button00\button_4_5.lst
+
+               ROM used:   131 words (2%)
+                           Largest free fragment is 2048
+               RAM used:   9 (2%) at main() level
+                           9 (2%) worst case
+               Stack used: 0 locations
+               Stack size: 8
+
+*
+0000:  MOVLW  00
+0001:  MOVWF  0A
+0002:  GOTO   019
+0003:  NOP
+.................... #include <16F877A.h> 
+.................... //////////// Standard Header file for the PIC16F877A device //////////////// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... ////        (C) Copyright 1996, 2014 Custom Computer Services          //// 
+.................... //// This source code may only be used by licensed users of the CCS C  //// 
+.................... //// compiler.  This source code may only be distributed to other      //// 
+.................... //// licensed users of the CCS C compiler.  No other use, reproduction //// 
+.................... //// or distribution is permitted without written permission.          //// 
+.................... //// Derivative programs created using this software in object code    //// 
+.................... //// form are not restricted in any way.                               //// 
+.................... /////////////////////////////////////////////////////////////////////////// 
+.................... #device PIC16F877A 
+....................  
+.................... #list 
+....................  
+.................... #fuses XT, NOWDT, NOLVP, BROWNOUT, NOPUT, NOPROTECT, NODEBUG 
+.................... #use delay(clock = 4M) 
+0004:  MOVLW  22
+0005:  MOVWF  04
+0006:  BCF    03.7
+0007:  MOVF   00,W
+0008:  BTFSC  03.2
+0009:  GOTO   018
+000A:  MOVLW  01
+000B:  MOVWF  78
+000C:  CLRF   77
+000D:  DECFSZ 77,F
+000E:  GOTO   00D
+000F:  DECFSZ 78,F
+0010:  GOTO   00C
+0011:  MOVLW  4A
+0012:  MOVWF  77
+0013:  DECFSZ 77,F
+0014:  GOTO   013
+0015:  GOTO   016
+0016:  DECFSZ 00,F
+0017:  GOTO   00A
+0018:  RETURN
+.................... #use fast_io(B) 
+.................... #use standard_io(D) 
+.................... #define BIT_1 0x01 
+.................... #define BIT_0 0x00 
+.................... #define BIT_7 0x80 
+....................  
+....................  
+.................... // IS USING OR and  LEFT DISPLACEMENT and RIGHT DISPLACEMENT 
+....................  
+.................... short current_d2_state = 0; 
+.................... short last_d2_state = 0; 
+....................  
+.................... short current_d3_state = 0; 
+.................... short last_d3_state = 0; 
+....................  
+.................... char ports_b = BIT_0; 
+....................  
+.................... int main(void) { 
+0019:  MOVF   03,W
+001A:  ANDLW  1F
+001B:  MOVWF  03
+001C:  BCF    20.0
+001D:  BCF    20.1
+001E:  BCF    20.2
+001F:  BCF    20.3
+0020:  CLRF   21
+0021:  BSF    03.5
+0022:  BSF    1F.0
+0023:  BSF    1F.1
+0024:  BSF    1F.2
+0025:  BCF    1F.3
+0026:  MOVLW  07
+0027:  MOVWF  1C
+0028:  BCF    03.7
+....................     set_tris_b(BIT_0); 
+0029:  MOVLW  00
+002A:  MOVWF  06
+....................  
+....................     output_b(BIT_0); 
+002B:  BCF    03.5
+002C:  CLRF   06
+....................     output_d(BIT_0); 
+002D:  BSF    03.5
+002E:  CLRF   08
+002F:  BCF    03.5
+0030:  CLRF   08
+....................  
+....................     while (true) 
+....................     { 
+....................         current_d2_state = input(PIN_D2); 
+0031:  BSF    03.5
+0032:  BSF    08.2
+0033:  BCF    03.5
+0034:  BCF    20.0
+0035:  BTFSC  08.2
+0036:  BSF    20.0
+....................         current_d3_state = input(PIN_D3); 
+0037:  BSF    03.5
+0038:  BSF    08.3
+0039:  BCF    03.5
+003A:  BCF    20.2
+003B:  BTFSC  08.3
+003C:  BSF    20.2
+....................  
+....................         if (current_d2_state == 1 && last_d2_state == 0) 
+003D:  BTFSS  20.0
+003E:  GOTO   05B
+003F:  BTFSC  20.1
+0040:  GOTO   05B
+....................         { 
+....................             delay_ms(10); 
+0041:  MOVLW  0A
+0042:  MOVWF  22
+0043:  CALL   004
+....................  
+....................             if (input(PIN_D2) != 1) 
+0044:  BSF    03.5
+0045:  BSF    08.2
+0046:  BCF    03.5
+0047:  BTFSS  08.2
+....................             { 
+....................                 continue; 
+0048:  GOTO   031
+....................             } 
+....................  
+....................             if (ports_b == BIT_0) 
+0049:  MOVF   21,F
+004A:  BTFSS  03.2
+004B:  GOTO   04F
+....................             { 
+....................                 ports_b = BIT_1; 
+004C:  MOVLW  01
+004D:  MOVWF  21
+....................             } 
+004E:  GOTO   059
+....................             else if (ports_b < BIT_7) 
+004F:  MOVF   21,W
+0050:  SUBLW  7F
+0051:  BTFSS  03.0
+0052:  GOTO   056
+....................             { 
+....................                 ports_b <<= BIT_1; 
+0053:  BCF    03.0
+0054:  RLF    21,F
+....................             } 
+0055:  GOTO   059
+....................             else 
+....................             { 
+....................                 current_d2_state = 0; 
+0056:  BCF    20.0
+....................                 last_d2_state = 0; 
+0057:  BCF    20.1
+....................                 ports_b = BIT_0; 
+0058:  CLRF   21
+....................             } 
+....................  
+....................             output_b(ports_b); 
+0059:  MOVF   21,W
+005A:  MOVWF  06
+....................         } 
+....................  
+....................         if (current_d3_state == 1 && last_d3_state == 0) 
+005B:  BTFSS  20.2
+005C:  GOTO   079
+005D:  BTFSC  20.3
+005E:  GOTO   079
+....................         { 
+....................             delay_ms(10); 
+005F:  MOVLW  0A
+0060:  MOVWF  22
+0061:  CALL   004
+....................  
+....................             if (input(PIN_D3) != 1) 
+0062:  BSF    03.5
+0063:  BSF    08.3
+0064:  BCF    03.5
+0065:  BTFSS  08.3
+....................             { 
+....................                 continue; 
+0066:  GOTO   031
+....................             } 
+....................  
+....................             if (ports_b == BIT_0) 
+0067:  MOVF   21,F
+0068:  BTFSS  03.2
+0069:  GOTO   06D
+....................             { 
+....................                 ports_b = BIT_7; 
+006A:  MOVLW  80
+006B:  MOVWF  21
+....................             } 
+006C:  GOTO   077
+....................             else if (ports_b <= BIT_7) 
+006D:  MOVF   21,W
+006E:  SUBLW  80
+006F:  BTFSS  03.0
+0070:  GOTO   074
+....................             { 
+....................                 ports_b >>= BIT_1; 
+0071:  BCF    03.0
+0072:  RRF    21,F
+....................             } 
+0073:  GOTO   077
+....................             else 
+....................             { 
+....................                 current_d3_state = 0; 
+0074:  BCF    20.2
+....................                 last_d3_state = 0; 
+0075:  BCF    20.3
+....................                 ports_b = BIT_0; 
+0076:  CLRF   21
+....................             } 
+....................  
+....................             output_b(ports_b); 
+0077:  MOVF   21,W
+0078:  MOVWF  06
+....................         } 
+....................  
+....................         last_d2_state = current_d2_state; 
+0079:  BCF    20.1
+007A:  BTFSC  20.0
+007B:  BSF    20.1
+....................         last_d3_state = current_d3_state; 
+007C:  BCF    20.3
+007D:  BTFSC  20.2
+007E:  BSF    20.3
+007F:  GOTO   031
+....................     } 
+....................  
+....................     return 0; 
+0080:  MOVLW  00
+0081:  MOVWF  78
+.................... } 
+0082:  SLEEP
+
+Configuration Fuses:
+   Word  1: 3F79   XT NOWDT NOPUT BROWNOUT NOLVP NOCPD NOWRT NODEBUG NOPROTECT

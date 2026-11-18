@@ -13,8 +13,8 @@
 020.3   last_d3_state
 021     ports_b
 022     @delay_ms1.P1
-022     MAIN.@SCRATCH1
-023     MAIN.@SCRATCH2
+022     main.@SCRATCH1
+023     main.@SCRATCH2
 077     @SCRATCH
 078     @SCRATCH
 078     _RETURN_
@@ -27,23 +27,21 @@
 
 ROM Allocation:
 000004  @delay_ms1
-000019  clear_d2_context
-00001F  clear_d3_context
-000025  MAIN
-000025  @cinit1
-000034  @cinit2
+000019  @cinit1
+000019  main
+000028  @cinit2
 
 Project Directory:
     C:\Users\Brandbold\Documents\PICsWorkSpace\button00\
 
 Project Files:
-    button_4.c                                              [24-oct.-26 19:43  CRC=02CDB30C]
+    button_4.c                                              [27-oct.-26 12:05  CRC=22AC6BDA]
     ..\..\..\..\..\PROGRA~2\PICC\Devices\16F877A.h          [15-ene.-18 14:53  CRC=63418C39]
 
-Source signature=C950CB7E
+Source signature=E92F844C
 Program memory checksum=0000
 Program memory CRC=0000
-Hex file CRC=DA05
+Hex file CRC=C8C5
 
 Units:
     button_4 (main)
